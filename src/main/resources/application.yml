@@ -1,15 +1,9 @@
 spring:
   application:
-    name: PortalConfigServer
-  cloud:
-    config:
-      server:
-        git:
-          uri: YOUR_GIT_URL
-          username: GIT_ID
-          password: GIT_PASSWORD
+    name: portalinfraadmin
+
 server:
-  port: ${8004}
+  port: ${3000}
 
 
 
