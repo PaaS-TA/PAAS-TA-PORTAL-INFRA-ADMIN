@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.5.9.RELEASE'
+        springBootVersion = '1.5.10.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -16,7 +16,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 jar{
-    baseName = 'Config_Server'
+    baseName = 'infra_admin'
 }
 
 
@@ -35,6 +35,7 @@ dependencies {
 
     compile ('de.codecentric:spring-boot-admin-server:1.5.7')
     compile ('de.codecentric:spring-boot-admin-server-ui:1.5.7')
+    compile ('de.codecentric:spring-boot-admin-server-ui-login:1.5.7')
 }
 dependencyManagement {
     imports {
