@@ -30,7 +30,7 @@ repositories {
 
 dependencies {
     //Admin Server Setting
-    compile ('de.codecentric:spring-boot-admin-starter-client')
+    compile ('de.codecentric:spring-boot-admin-starter-client:1.5.7')
 
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-security")
