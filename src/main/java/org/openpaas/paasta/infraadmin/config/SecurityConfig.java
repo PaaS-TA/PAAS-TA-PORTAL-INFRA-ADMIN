@@ -1,5 +1,7 @@
 package org.openpaas.paasta.infraadmin.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +11,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
@@ -18,6 +19,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private  static final Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
 
     @Value("${spring.security.username}")
     String username;
@@ -38,9 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser(username).password(password).roles("USER");
+        LOGGER.info("USER : " + username + " PWD : " + password);
+        auth.inMemoryAuthentication().withUser(username).password(password).roles("USER");
     }
 
     @Bean
@@ -51,22 +53,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-				.csrf().disable()
-                .authorizeRequests()
-                    .antMatchers("/").permitAll()
-                    .antMatchers("/external/**").permitAll()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/**").hasRole("USER")
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic()
-                .and()
-                .csrf().disable();
+        http.formLogin().loginPage("/login.html").loginProcessingUrl("/login").permitAll();
+        http.logout().logoutUrl("/logout");
+        http.csrf().disable();
+        http.authorizeRequests().antMatchers("/login.html", "/**/*.css", "/img/**", "/third-party/**").permitAll();
+        http.authorizeRequests().antMatchers("/**").authenticated();
+        http.httpBasic();
     }
 
 }
