@@ -56,6 +56,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin().loginPage("/login.html").loginProcessingUrl("/login").permitAll();
         http.logout().logoutUrl("/logout");
         http.csrf().disable();
+        //Spring boot Admin 정보 접근 URL - 시작
+        http.authorizeRequests()
+                .antMatchers("/info").permitAll()
+                .antMatchers("/env").permitAll()
+                .antMatchers("/metrics").permitAll()
+                .antMatchers("/trace").permitAll()
+                .antMatchers("/dump").permitAll()
+                .antMatchers("/jolokia").permitAll()
+                .antMatchers("/configprops").permitAll()
+                .antMatchers("/logfile").permitAll()
+                .antMatchers("/flyway").permitAll()
+                .antMatchers("/liquibase").permitAll()
+                .antMatchers("/heapdump").permitAll()
+                .antMatchers("/loggers").permitAll()
+                .antMatchers("/auditevents").permitAll()
+                .antMatchers("/hystrix.stream").permitAll()
+                .antMatchers("/docs").permitAll()
+                .antMatchers("/jmx").permitAll()
+                .antMatchers("/management/**").permitAll()
+                .antMatchers("/api/applications/**").permitAll()
+                .antMatchers("/health/**").permitAll()
+                .antMatchers("/resources/**").permitAll();
+        //Spring boot Admin 정보 접근 URL - 끝
         http.authorizeRequests().antMatchers("/login.html", "/**/*.css", "/img/**", "/third-party/**").permitAll();
         http.authorizeRequests().antMatchers("/**").authenticated();
         http.httpBasic();
