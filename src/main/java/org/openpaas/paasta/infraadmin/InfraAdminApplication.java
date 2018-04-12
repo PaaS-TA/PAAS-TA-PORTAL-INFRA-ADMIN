@@ -22,5 +22,6 @@ public class InfraAdminApplication {
     public static void main(String[] args) {
         SpringApplication.run(InfraAdminApplication.class, args);
     }
+
 }
 
