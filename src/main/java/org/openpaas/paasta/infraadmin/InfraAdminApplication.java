@@ -18,10 +18,8 @@ import org.springframework.context.annotation.Configuration;
 @EnableAdminServer
 @EnableDiscoveryClient
 public class InfraAdminApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(InfraAdminApplication.class, args);
     }
-
 }
 
